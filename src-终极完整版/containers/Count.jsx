@@ -1,7 +1,10 @@
-
+//2.引入connect方法(重点)
+import {connect} from 'react-redux'
+import {increment,decrement,incrementAsync} from '../redux/action/action'
 import React, { Component } from 'react'
 
-export default class Count extends Component {
+
+ class Count extends Component {
 
 	//加
 	increment = ()=>{
@@ -29,15 +32,14 @@ export default class Count extends Component {
 	//等500毫秒再加
 	incrementAsync = ()=>{
 		const {value} = this.refs.user_selected
-		setTimeout(()=>{
-			this.props.increment(value*1)
-		},500)
+		this.props.incrementAsync(value*1,1000)
 	}
 
+	
 	render() {
 		return (
 			<div>
-				<h1>当前求和为：{this.props.count}</h1>
+				<h1>当前求和为：{this.props.count} 人数为:{this.props.shu.length}</h1>
 				<select ref="user_selected">
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -51,3 +53,12 @@ export default class Count extends Component {
 		)
 	}
 }
+
+
+export default connect(
+  state=>({
+    count:state.number,
+    shu:state.person
+  }),
+  {increment,decrement,incrementAsync},
+)(Count)
