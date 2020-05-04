@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, } from 'antd';
-import {reqLogin} from '../../api/index'
+import {reqLogin} from '@/api/index'
 import logo from './images/logo.png'
 import './css/login.less'
 const {Item} = Form

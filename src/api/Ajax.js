@@ -3,7 +3,7 @@ import qs from 'querystring' //用于将对象转为urlencoded字符串
 import {message as msg} from 'antd'
 
 //配置请求的基础路径
-axios.defaults.baseURL = ''
+axios.defaults.baseURL = '/api'
 //配置超时时间
 axios.defaults.timeout = 2000
 
