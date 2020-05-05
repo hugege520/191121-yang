@@ -1,7 +1,8 @@
 import axios from 'axios'
 import qs from 'querystring' //用于将对象转为urlencoded字符串
 import {message as msg} from 'antd'
-
+import nprogress from "nprogress";
+import 'nprogress/nprogress.css'
 //配置请求的基础路径
 axios.defaults.baseURL = '/api'
 //配置超时时间
@@ -9,19 +10,21 @@ axios.defaults.timeout = 2000
 
 axios.interceptors.request.use((config)=>{
   const {method,data} = config
-  console.log(config)
   //统一处理post请求json编码问题（转为urlencoded）
   if(method.toLowerCase()==='post'&&data instanceof Object){
     config.data=qs.stringify(data)
   }
+  nprogress.start()
   return config
 })  
 
 axios.interceptors.response.use(
   response=>{
+    nprogress.done()
     return response.data
   },
   err=>{
+    	nprogress.done()
     let errmsg = '未知错误，请联系管理员'
     const {message} = err
     if(message.indexOf('401')!==-1) errmsg= '未登录或身份过期，请重新登录!'

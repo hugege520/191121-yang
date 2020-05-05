@@ -1,18 +1,28 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, } from 'antd';
+import { Form, Input, Button, message} from 'antd';
+import {connect} from 'react-redux'
+import { saveUserInfo } from "@/redux/actoins/login";
 import {reqLogin} from '@/api/index'
 import logo from './images/logo.png'
+import Check from "@/containers/Hoc/Check";
 import './css/login.less'
 const {Item} = Form
-export default class Login extends Component {
+@connect(
+  state=>({user:state.uesrInfo,isLogin:state.uesrInfo.isLogin}),
+  {saveUserInfo}
+)
+@Check
+ class Login extends Component {
   onFinish=async (value)=>{
-    console.log(value)
-   
       let result = await reqLogin(value)
-      console.log(result);
- 
+      const {data,status,msg} = result
+      if(status === 0){
+        message.success('登陆成功')
+        this.props.saveUserInfo(data)
+      }else{
+        message.error('登陆失败')
+      }
   }
-
   pwdValidator=(_,value)=>{
     let errMsgArr = []
     if(!value.trim()) return Promise.reject('用户名必须输入') 
@@ -70,3 +80,5 @@ export default class Login extends Component {
     )
   }
 }
+
+export default Login
