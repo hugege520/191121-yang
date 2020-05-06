@@ -33,7 +33,7 @@ const {  Footer, Sider, Content } = Layout;
         </Sider>
         <Layout>
           <Header />
-          <Content>
+          <Content className="content">
               <Switch>
                 <Route path="/admin/user" component={User}/>
                 <Route path="/admin/home" component={Home}/>

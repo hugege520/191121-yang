@@ -5,7 +5,7 @@ import { SU_ZHOU,JS_ON,A_K } from "@/config/index";
 //请求登录的函数,loginObj形如：{username:'xx',password:'xx'}
 export const reqLogin = (loginObj)=>axios.post('/login',loginObj)
 
-
+//天气预报
 export const reqWeatherData = ()=>{
   const url = `http://api.map.baidu.com/telematics/v3/weather?location=${SU_ZHOU}&output=${JS_ON}&ak=${A_K}`
   return new Promise ((resolve)=>{
@@ -20,3 +20,5 @@ export const reqWeatherData = ()=>{
     })
   })
 }
+//请求分类列表
+export const reqCategoryList = ()=>axios.get('/manage/category/list')

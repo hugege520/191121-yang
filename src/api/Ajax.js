@@ -3,6 +3,7 @@ import qs from 'querystring' //用于将对象转为urlencoded字符串
 import {message as msg} from 'antd'
 import nprogress from "nprogress";
 import 'nprogress/nprogress.css'
+import store from "@/redux/store";
 //配置请求的基础路径
 axios.defaults.baseURL = '/api'
 //配置超时时间
@@ -13,6 +14,11 @@ axios.interceptors.request.use((config)=>{
   //统一处理post请求json编码问题（转为urlencoded）
   if(method.toLowerCase()==='post'&&data instanceof Object){
     config.data=qs.stringify(data)
+  }
+  //携带请求头
+  let {token} = store.getState().uesrInfo
+  if(token){
+    config.headers.Authorization='atguigu_'+token
   }
   nprogress.start()
   return config

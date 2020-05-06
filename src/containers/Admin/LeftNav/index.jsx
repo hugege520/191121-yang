@@ -1,16 +1,52 @@
 import React, { Component } from 'react'
 import { Menu } from 'antd';
+import {Link,withRouter} from "react-router-dom";
+import { connect } from "react-redux";
 import menus from "@/config/menu_config";
 import logo from '@/assets/images/logo.png'
+import { saveTitle } from "@/redux/actoins/header";
 import './css/left.less'
 const { SubMenu } = Menu;
-export default class LeftNav extends Component {
+@connect(
+  state=>({title:state.headerTitle}),
+  {saveTitle}
+)
+@withRouter
+ class LeftNav extends Component {
+   componentDidMount(){
+     //头部title
+     const {pathname} = this.props.location
+     let currentKey = pathname.split('/');
+     let surrentKey = currentKey.slice(-1)[0]
+      console.log(surrentKey);
+      menus.forEach(v=>{
+        if(!v.children){
+          if(v.key===surrentKey) {
+            this.props.saveTitle(v.title)
+          }
+        }else if(v.children){
+          v.children.find(v=>{
+            if(v.key===surrentKey){
+              this.props.saveTitle(v.title)
+            }
+          })
+        }
+      })
+   }
+   //头部逻辑
+   saveTitle=(title)=>{
+    this.props.saveTitle(title)
+   }
+   //组件展示
   createMenu=(menuArr)=>{
     return menuArr.map(v=>{
       if(!v.children){
         return (
-          <Menu.Item key={v.key} icon={<v.icon />}>
-            {v.title}
+          <Menu.Item key={v.key} onClick={()=>{this.saveTitle(v.title)}}>
+            <Link to={v.path}>
+              {<v.icon />}
+              {v.title}
+            </Link>
           </Menu.Item>
         )
       }else if(v.children){
@@ -23,6 +59,9 @@ export default class LeftNav extends Component {
     })
   }
   render() {
+    const {pathname} = this.props.location
+    let openedkey = pathname.split('/')
+    let checkedKey = openedkey.slice(-1)
     return (
       <div className="leftNav">
         <div className="topNav">
@@ -31,8 +70,8 @@ export default class LeftNav extends Component {
         </div>
         <div >
         <Menu
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
+            defaultSelectedKeys={checkedKey}
+            defaultOpenKeys={openedkey}
             mode="inline"
             theme="dark"
         >
@@ -43,3 +82,5 @@ export default class LeftNav extends Component {
     )
   }
 }
+
+export default LeftNav

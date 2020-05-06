@@ -11,7 +11,8 @@ const { confirm } = Modal;
 @connect(
   state => ({
     username: state.uesrInfo.user.username,
-    isLogin: state.uesrInfo.isLogin
+    isLogin: state.uesrInfo.isLogin,
+    title:state.headerTitle
   }),
   { deleUserInfo }
 )
@@ -32,6 +33,16 @@ class Header extends Component {
     });
     // //天气
     this.tianqi()
+    //时间
+    this.timer=setInterval(() => {
+      this.setState({
+        tirme:dayjs().format('YYYY年 MM月-DD日 HH:mm:ss')//时间
+      })
+    }, 1000);
+  }
+  //组件销毁前
+  componentWillUnmount(){
+    clearInterval(this.timer)
   }
     //天气
   tianqi = async () => {
@@ -70,7 +81,7 @@ class Header extends Component {
         </div>
         <div className="headerBottom">
           <div className="bottomLeft">
-            <span>首页</span>
+            <span>{this.props.title}</span>
           </div>
           <div className="bottomRight">
             <span>{this.state.tirme}</span>
