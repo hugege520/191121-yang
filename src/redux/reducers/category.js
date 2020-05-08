@@ -6,7 +6,7 @@ export default function (preState=arrCategory,action) {
   let newState
   switch (type) {
     case SAVE_CATEGORY:
-      newState= data
+      newState= [...data].reverse()
       return newState
     default:
      return preState

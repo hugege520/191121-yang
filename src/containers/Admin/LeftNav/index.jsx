@@ -70,7 +70,7 @@ const { SubMenu } = Menu;
         </div>
         <div >
         <Menu
-            defaultSelectedKeys={checkedKey}
+            selectedKeys={checkedKey}
             defaultOpenKeys={openedkey}
             mode="inline"
             theme="dark"
