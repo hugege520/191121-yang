@@ -33,3 +33,13 @@ export const reqProductList = (pageNum,pageSize)=>axios.get('/manage/product/lis
 
 //搜索商品列表
 export const reqProductSearch = (searchType,keyWord,pageNum,pageSize) =>axios.get('/manage/product/search',{params:{[searchType]:keyWord,pageNum,pageSize}})
+
+//请求商品下架和上架
+
+export const reqProductUpdateStatus = (productId,status)=>axios.post('/manage/product/updateStatus',{productId,status})
+//请求商品详情
+export const reqProductInfoById = (productId)=>axios.get('/manage/product/info',{params:{productId}})
+//删除图片
+export const reqImgDele=(name)=>axios.post('/manage/img/delete',{name})
+
+

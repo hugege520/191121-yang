@@ -61,7 +61,9 @@ const { SubMenu } = Menu;
   render() {
     const {pathname} = this.props.location
     let openedkey = pathname.split('/')
-    let checkedKey = openedkey.slice(-1)
+    let checkedKey 
+    if(openedkey.indexOf('product')!==-1)checkedKey='product'
+    else checkedKey=openedkey.slice(-1)
     return (
       <div className="leftNav">
         <div className="topNav">

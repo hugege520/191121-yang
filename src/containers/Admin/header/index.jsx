@@ -68,6 +68,11 @@ class Header extends Component {
       },
     });
   }
+  titleHeadr=()=>{
+    let {title} = this.props
+    if(!title)title='商品管理'
+    return title
+  }
 
   render() {
     return (
@@ -81,7 +86,7 @@ class Header extends Component {
         </div>
         <div className="headerBottom">
           <div className="bottomLeft">
-            <span>{this.props.title}</span>
+            <span>{this.titleHeadr()}</span>
           </div>
           <div className="bottomRight">
             <span>{this.state.tirme}</span>

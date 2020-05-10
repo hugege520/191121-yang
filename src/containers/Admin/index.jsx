@@ -15,6 +15,8 @@ import Pie from './Pie/Pie'
 import Product from './Product/Product'
 import Role from './Role/Role'
 import User from './User/User'
+import AddUpdate from  './Product/AddUpdate/index'
+import Detail from './Product/Detail/index'
 const {  Footer, Sider, Content } = Layout;
 @connect(
   state=>({
@@ -38,15 +40,18 @@ const {  Footer, Sider, Content } = Layout;
                 <Route path="/admin/user" component={User}/>
                 <Route path="/admin/home" component={Home}/>
                 <Route path="/admin/prod_about/category" component={Category}/>
-                <Route path="/admin/prod_about/product" component={Product}/>
+                <Route path="/admin/prod_about/product" exact component={Product}/>
                 <Route path="/admin/role" component={Role}/>
                 <Route path="/admin/charts/bar" component={Bar}/>
                 <Route path="/admin/charts/line" component={Line}/>
                 <Route path="/admin/charts/pie" component={Pie}/>
+                <Route path="/admin/prod_about/product/detail/:id" component={Detail}/>
+                <Route path="/admin/prod_about/product/addUpdate/:id" component={AddUpdate}/>
+                <Route path="/admin/prod_about/product/addUpdate" component={AddUpdate}/>
                 <Redirect to="/admin/home"/>
               </Switch>
           </Content>
-          <Footer>Footer</Footer>
+          <Footer style={{}}>推荐使用谷歌浏览器，获取最佳用户体验</Footer>
         </Layout>
       </Layout>
     )
