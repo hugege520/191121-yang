@@ -32,7 +32,7 @@ class Header extends Component {
       })
     });
     // //天气
-    this.tianqi()
+    // this.tianqi()
     //时间
     this.timer=setInterval(() => {
       this.setState({

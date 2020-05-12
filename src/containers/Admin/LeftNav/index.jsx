@@ -8,7 +8,11 @@ import { saveTitle } from "@/redux/actoins/header";
 import './css/left.less'
 const { SubMenu } = Menu;
 @connect(
-  state=>({title:state.headerTitle}),
+  (state)=>({
+    title:state.headerTitle,
+    userMenus:state.uesrInfo.user.role.menus,
+    username:state.uesrInfo.user.username
+  }),
   {saveTitle}
 )
 @withRouter
@@ -18,7 +22,6 @@ const { SubMenu } = Menu;
      const {pathname} = this.props.location
      let currentKey = pathname.split('/');
      let surrentKey = currentKey.slice(-1)[0]
-      console.log(surrentKey);
       menus.forEach(v=>{
         if(!v.children){
           if(v.key===surrentKey) {
@@ -37,25 +40,36 @@ const { SubMenu } = Menu;
    saveTitle=(title)=>{
     this.props.saveTitle(title)
    }
+   getMeus=(meuObj)=>{
+     const {userMenus,username} = this.props
+     if(username === 'admin') return true
+     if(!meuObj.children){
+      return userMenus.find(v=>v===meuObj.key)
+     }else if(meuObj.children){ 
+       return meuObj.children.some(tem=>userMenus.indexOf(tem.key)!==-1)
+     }
+   }
    //组件展示
   createMenu=(menuArr)=>{
     return menuArr.map(v=>{
-      if(!v.children){
-        return (
-          <Menu.Item key={v.key} onClick={()=>{this.saveTitle(v.title)}}>
-            <Link to={v.path}>
-              {<v.icon />}
-              {v.title}
-            </Link>
-          </Menu.Item>
-        )
-      }else if(v.children){
-          return (
-            <SubMenu key={v.key} icon={<v.icon />} title={v.title}>
-              {this.createMenu(v.children)}
-            </SubMenu>
-          )
-      }
+        if(this.getMeus(v)){
+          if(!v.children){
+            return (
+              <Menu.Item key={v.key} onClick={()=>{this.saveTitle(v.title)}}>
+                <Link to={v.path}>
+                  {<v.icon />}
+                  {v.title}
+                </Link>
+              </Menu.Item>
+            )
+          }else if(v.children){
+              return (
+                <SubMenu key={v.key} icon={<v.icon />} title={v.title}>
+                  {this.createMenu(v.children)}
+                </SubMenu>
+              )
+          }
+        }
     })
   }
   render() {

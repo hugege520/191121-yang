@@ -21,6 +21,30 @@ class PicturesWall extends Component {
       
     ],
   };
+//数据会写到页面name uid: "rc-upload-1589208879413-2" url: "http://localhost:4000/upload/image-1589208887197.jp status: "done"
+  getAnswer = (imges)=>{
+    let fileList = []
+    imges.forEach((v,index)=>{
+      fileList.push({
+        name:v,
+        uid:-index,
+        url:`http://localhost:4000/upload/${v}`,
+        status: "done"
+      })
+    })
+    this.setState({
+      fileList
+    })
+  }
+  //获取表单数据
+  getFileList=()=>{
+    const {fileList} = this.state
+    let result = []
+     fileList.forEach((v,index)=>{
+      result.push(v.name)
+     })
+     return result
+  }
 	//预览窗关闭按钮的回调（程序员无需修改）
   handleCancel = () => this.setState({ previewVisible: false });
 	//点击预览按钮的回调，("小眼睛按钮"，程序员无需修改)
@@ -58,6 +82,7 @@ class PicturesWall extends Component {
       }
     }
     this.setState({ fileList });
+    console.log(fileList)
   } 
 
   render() {

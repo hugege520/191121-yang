@@ -43,7 +43,6 @@ class Detail extends Component {
     return title
   }
   render() {
-    console.log(this.state.infoById)
     const { name, desc, price, categoryId, detail, imgs } = this.state.infoById
     return (
       <div>
